@@ -20,5 +20,5 @@ Route::group(['middleware' => 'auth:api'], function ($router) {
 Route::group([
     'middleware' => 'auth:api',
 ], function ($router) {
-    Route::post('/students/getsheet', [StudentController::class, 'indexFromSheet']);
+    Route::post('classroom/{id_classroom}/students', [StudentController::class, 'store']);
 });

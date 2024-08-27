@@ -10,10 +10,10 @@ class Student extends Model
 {
     use HasFactory;
 
-    protected $incrementing = false;
+    public $incrementing = false;
     protected $keytype = 'string';
 
-    protected $fillable = ['id', 'name'];
+    protected $fillable = ['name', 'classroom_id'];
 
     protected static function boot(){
         parent::boot();
