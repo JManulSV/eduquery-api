@@ -9,6 +9,44 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class ClassroomController extends Controller
 {
+
+    /**
+     * Display a listing of the user's classrooms.
+     *
+     * This function retrieves the classrooms associated with the authenticated user.
+     * If the user has no classrooms, it returns a success response with an empty data array.
+     *
+     * @return \Illuminate\Http\JsonResponse The JSON response containing the classrooms data or a message indicating that the classrooms are empty.
+     *
+     * @throws \Throwable If any error occurs during the fetching of classrooms.
+     */
+    public function index()
+    {
+        try {
+            $user = JWTAuth::parseToken()->authenticate();
+            $classrooms = $user->classrooms;
+
+            if ($classrooms->isEmpty()) {
+                return response()->json([
+                    'status' => 'success',
+                    'data' => [],
+                    'message' => 'The classrooms are empty'
+                ], 204);
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'data' => $classrooms,
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'An error occurred while fetching classrooms',
+                'details' => $th->getMessage()
+            ], 500);
+        }
+    }
+
     /**
      * Display the specified classroom.
      *
@@ -19,7 +57,7 @@ class ClassroomController extends Controller
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If the classroom with the specified ID is not found.
      * @throws \Throwable If any other error occurs during the retrieval process.
      */
-    public function index(String $id)
+    public function show(String $id)
     {
         $classroom = Classroom::findOrFail($id);
 

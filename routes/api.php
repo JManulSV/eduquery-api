@@ -11,7 +11,8 @@ Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login'])->name('login');
 
 Route::group(['middleware' => 'auth:api'], function ($router) {
-    Route::post('/classrooms/{id}', [ClassroomController::class, 'index'])->middleware(CheckOwnership::class);
+    Route::get('/classrooms', [ClassroomController::class, 'index']);
+    Route::post('/classrooms/{id}', [ClassroomController::class, 'show'])->middleware(CheckOwnership::class);
     Route::post('/classrooms', [ClassroomController::class, 'store']);
     Route::patch('/classrooms/{id}', [ClassroomController::class, 'update'])->middleware(CheckOwnership::class);
     Route::delete('/classrooms/{id}', [ClassroomController::class, 'destroy'])->middleware(CheckOwnership::class);

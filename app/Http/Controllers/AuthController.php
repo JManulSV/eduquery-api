@@ -59,6 +59,9 @@ class AuthController extends Controller
         } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
             return response()->json(['error' => 'Could not create token'], 500);
         }
-        return response()->json(['token' => $token]);
+
+        $user = JWTAuth::user();
+
+        return response()->json(['token' => $token, 'user' => $user], 200);
     }
 }
