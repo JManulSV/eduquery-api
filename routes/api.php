@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\SheetController;
 use App\Http\Controllers\StudentController;
 use App\Http\Middleware\CheckOwnership;
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ Route::group(['middleware' => 'auth:api'], function ($router) {
     Route::post('/classrooms', [ClassroomController::class, 'store']);
     Route::patch('/classrooms/{id}', [ClassroomController::class, 'update'])->middleware(CheckOwnership::class);
     Route::delete('/classrooms/{id}', [ClassroomController::class, 'destroy'])->middleware(CheckOwnership::class);
+    Route::post('/sheets', [SheetController::class, 'store']);
 });
 
 Route::group([

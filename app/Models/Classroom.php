@@ -11,6 +11,9 @@ class Classroom extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'description', 'user_id'];
+    protected $visible = ['id', 'name', 'description'];
+    protected $keyType = 'string';
+    public $incrementing = false; 
 
     protected static function boot()
     {
@@ -31,5 +34,9 @@ class Classroom extends Model
 
     public function subjects(){
         return $this->hasMany(Subject::class);
+    }
+
+    public function sheet(){
+        return $this->hasOne(Sheet::class);
     }
 }

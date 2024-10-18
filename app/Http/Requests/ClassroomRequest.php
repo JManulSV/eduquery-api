@@ -24,6 +24,7 @@ class ClassroomRequest extends BaseRequest
         return [
             'name' => 'required|string|max:100', 
             'description' => 'nullable|string|max:500',
+            'sheet_id' => 'required|string|max:30',
         ];
     }
 
@@ -40,6 +41,8 @@ class ClassroomRequest extends BaseRequest
             'title.max' => 'The title may not be greater than 100 characters.',
             'description.string' => 'The description must be a valid string.',
             'description.max' => 'The description may not be greater than 500 characters.',
+            'sheet_id.max' => 'The sheet id may not be greater than 100 characters.',
+            'sheet_id.required' => 'The sheet id field is mandatory.',
         ];
     }
 }

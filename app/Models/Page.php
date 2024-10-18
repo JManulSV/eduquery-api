@@ -14,4 +14,8 @@ class Page extends Model
     public function Sheet(){
         $this->belongsTo(Sheet::class);
     }
+
+    public function Subject(){
+        $this->belongsTo(Subject::class);
+    }
 }

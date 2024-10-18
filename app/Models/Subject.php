@@ -19,7 +19,7 @@ class Subject extends Model
         return $this->hasMany(Activity::class);
     }
 
-    public function sheets(){
-        return $this->hasMany(Sheet::class);
+    public function page(){
+        return $this->hasOne(Page::class);
     }
 }

@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('sheets', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->unsignedBigInteger('subject_id');
+            $table->uuid('classroom_id');
             $table->timestamps();
 
-            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
+            $table->foreign('classroom_id')->references('id')->on('classrooms')->onDelete('cascade');
         });
     }
 

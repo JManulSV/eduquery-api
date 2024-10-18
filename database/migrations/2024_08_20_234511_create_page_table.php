@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string("name");
             $table->string("sheet_id");
+            $table->unsignedBigInteger("subject_id");
             $table->timestamps();
 
             $table->foreign('sheet_id')->references('id')->on('sheets')->onDelete('cascade');
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
         });
     }
 

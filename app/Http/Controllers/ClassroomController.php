@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ClassroomRequest;
 use App\Models\Classroom;
+use App\Models\Sheet;
 use Illuminate\Http\Request;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\DB;
 
 class ClassroomController extends Controller
 {
@@ -24,11 +26,11 @@ class ClassroomController extends Controller
     {
         try {
             $user = JWTAuth::parseToken()->authenticate();
-            $classrooms = $user->classrooms;
+            $classrooms = $user->classrooms()->get();
 
             if ($classrooms->isEmpty()) {
                 return response()->json([
-                    'status' => 'success',
+                    'status' => 'success',  
                     'data' => [],
                     'message' => 'The classrooms are empty'
                 ], 204);
@@ -95,7 +97,7 @@ class ClassroomController extends Controller
                 'description' => $request['description'],
                 'user_id' => $user->id
             ]);
-
+            
             return response()->json(['status' => 'success', 'data' => $newClassroom], 201);
         } catch (\Throwable $th) {
             return response()->json([

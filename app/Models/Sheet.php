@@ -12,10 +12,10 @@ class Sheet extends Model
     public $increment = false;
     protected $keytype = 'string';
 
-    protected $fillable = ['id'];
+    protected $fillable = ['id', 'classroom_id'];
 
-    public function subject(){
-        return $this->BelongsTo(Subject::class);
+    public function classroom(){
+        return $this->BelongsTo(Classroom::class);
     }
 
     public function pages(){
