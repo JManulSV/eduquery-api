@@ -9,8 +9,8 @@ class Sheet extends Model
 {
     use HasFactory;
 
-    public $increment = false;
-    protected $keytype = 'string';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = ['id', 'classroom_id'];
 

@@ -33,7 +33,7 @@ class ClassroomController extends Controller
                     'status' => 'success',  
                     'data' => [],
                     'message' => 'The classrooms are empty'
-                ], 204);
+                ], 200);
             }
 
             return response()->json([
@@ -97,8 +97,15 @@ class ClassroomController extends Controller
                 'description' => $request['description'],
                 'user_id' => $user->id
             ]);
+
+            $newSheet = new Sheet([
+                'id' => $request->sheet_id,
+                'classroom_id' => $newClassroom->id,
+            ]);
+
+            $newSheet->save();
             
-            return response()->json(['status' => 'success', 'data' => $newClassroom], 201);
+            return response()->json(['status' => 'success', 'data' => ['classroom' => $newClassroom, 'sheet' => $newSheet]], 201);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => 'error',

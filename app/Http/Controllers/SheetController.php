@@ -10,31 +10,33 @@ class SheetController extends Controller
 {
     public function store(Request $request)
     {
+        $request->validate([
+            'sheet_id' => 'required|integer',
+            'classroom' => 'required|string',
+        ]);
+
         $user = JWTAuth::parseToken()->authenticate();
 
-        // Buscar el aula más reciente
-        $classroom = $user
-            ->classrooms()
+        $classroom = $user->classrooms()
             ->where('name', $request->classroom)
             ->orderBy('created_at', 'desc')
             ->first();
 
-        // Verificar si se encontró el aula
         if (!$classroom) {
             return response()->json(['error' => 'Classroom not found'], 404);
         }
 
-        // Crear la nueva hoja
         $sheet = new Sheet([
             'id' => $request->sheet_id,
             'classroom_id' => $classroom->id,
         ]);
 
-        $sheet->save();
+        try {
+            $sheet->save();
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error saving sheet'], 500);
+        }
 
-        // Asumimos que la relación en Classroom se llama sheets
-        //$newSheet = $classroom->sheet()->save($sheet);
-
-        return response()->json(['data' => $sheet]);
+        return response()->json(['message' => 'Sheet created successfully', 'data' => $sheet], 201);
     }
 }
